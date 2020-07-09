@@ -6,20 +6,21 @@ import json
 
 bot = telebot.TeleBot(os.environ['SPACE_BOT_TOKEN'])
 
+# funções de captura de mensagens
 @bot.message_handler(commands=['start', 'help'])
 def send_start_message(message):
   bot.reply_to(message, 'Olá '+ message.from_user.first_name 
                         +", eu sou o Donio "
                         "\nAbaixo a lista de comandos que eu respondo"
-                        "\n/people para saber quais "
+                        "\n\n/people para saber quais "
                         "pessoas estão no espaço nesse momento."
-                        "\n/olá, /oi, /oii, /eae para um comprimento amigavel"
-                        "\n/frase para um frase aleátoria"
-                        "\n/start ou /help para mostrar os comandos novamente"
+                        "\n\n/olá, /oi, /oii, /eae para um comprimento amigavel"
+                        "\n\n/frase para um frase aleátoria"
+                        "\n\n/start ou /help para mostrar os comandos novamente"
                         "\n\n /info para informações sobre bot e seu desenvolvedor"
                         )
 
-@bot.message_handler(commands=['info'])
+@bot.message_handler(commands=['info', 'donio'])
 def send_people(message):
   bot.reply_to(message, 'Olá meu nome é Donio\n'
                         'Fui criado por Mardonio S Costa com BotFather'
@@ -32,6 +33,17 @@ def send_people(message):
 def send_people(message):
   bot.reply_to(message, get_reply_message())
 
+@bot.message_handler(commands=['frase'])
+def send_frase(message):
+  frase = get_frase_random()
+  bot.reply_to(message, frase)
+
+@bot.message_handler(commands=['oi', 'olá', 'oii', 'eae'])
+def send_cumprimento(message):
+    bot.reply_to(message, get_cumprimento_message(message))
+
+
+# mensagem de resposta do bot
 def get_reply_message():
   n_people, people = get_people()
   message = "Existem " \
@@ -42,20 +54,11 @@ def get_reply_message():
                 " na espaçonave " + person["craft"] + "\n\n"
   return message
 
-@bot.message_handler(commands=['frase'])
-def send_frase(message):
-  frase = get_frase_random()
-  bot.reply_to(message, frase)
-
 def get_people():
   req = "http://api.open-notify.org/astros.json"
   response = urllib.request.urlopen(req)
   obj = json.loads(response.read())
   return obj["number"], obj["people"]
-
-@bot.message_handler(commands=['oi', 'olá', 'oii', 'eae'])
-def send_cumprimento(message):
-    bot.reply_to(message, get_cumprimento_message(message))
 
 def get_cumprimento_message(msg):
     return 'Olá '+ msg.from_user.first_name +  ', Legal poder falar com você'

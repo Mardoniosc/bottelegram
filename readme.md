@@ -1,6 +1,9 @@
 ### BotTelegram Donio
 :octocat: Bot que obtem informações de uma api e responde tabmém de forma estatica.
 
+
+### Dispnivel no telegram como ```@donioscbot```
+
 ### Librerias Necesarias
 requirements.txt
 
