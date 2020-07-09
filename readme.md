@@ -1,5 +1,5 @@
 ### BotTelegram Donio
-bot que obtem informações de uma api e responde tabmém de forma estatica.
+:octocat: Bot que obtem informações de uma api e responde tabmém de forma estatica.
 
 ### Librerias Necesarias
 requirements.txt
